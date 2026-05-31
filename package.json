@@ -1,0 +1,28 @@
+{
+  "name": "simon-tech-bot",
+  "version": "2.0.0",
+  "description": "SIMON-v2 is a powerful WhatsApp bot built with Baileys",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "session": "node session-generator.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [
+    "whatsapp",
+    "bot",
+    "baileys",
+    "automation"
+  ],
+  "author": "veriferjp-coder",
+  "license": "MIT",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^6.4.1",
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "qrcode": "^1.5.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
