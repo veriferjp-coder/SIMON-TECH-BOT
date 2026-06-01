@@ -1,5 +1,7 @@
 # 🤖 SIMON-TECH-BOT
 
+![SIMON-TECH Bot](assets/bot-appearance.png)
+
 SIMON-v2 is a powerful WhatsApp bot built with Baileys. It supports commands like ping, menu, auto replies, and more. Easily deploy using GitHub and run on platforms like Replit. Simple setup, fast performance, and customizable features for automation and fun.
 
 ## 📋 Features
@@ -10,6 +12,9 @@ SIMON-v2 is a powerful WhatsApp bot built with Baileys. It supports commands lik
 - ✅ Easy deployment on Replit/Heroku
 - ✅ Customizable commands and responses
 - ✅ Fast performance and reliability
+- ✅ AI Powered System
+- ✅ Multi-Device Support
+- ✅ 300+ Commands Available
 
 ## 🚀 Getting Started
 
@@ -114,6 +119,7 @@ SIMON-TECH-BOT/
 ├── config.js              # Configuration
 ├── commands/              # Custom commands
 ├── utils/                 # Utility functions
+├── assets/                # Bot appearance and assets
 ├── .env                   # Environment variables
 └── package.json           # Dependencies
 ```
