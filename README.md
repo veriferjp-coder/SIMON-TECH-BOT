@@ -16,6 +16,12 @@ SIMON-v2 is a powerful WhatsApp bot built with Baileys. It supports commands lik
 - ✅ Multi-Device Support
 - ✅ 300+ Commands Available
 
+## 🤝 Join Our Community
+
+Connect with us and get support:
+
+- **📱 WhatsApp Group:** [Join Group](https://chat.whatsapp.com/KTlgMttDWxC04ZoiJCnz23)
+
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -183,6 +189,7 @@ For issues and support:
 - Open an issue on GitHub
 - Check existing issues first
 - Provide error logs and details
+- Join our WhatsApp group for community support
 
 ## 📄 License
 
@@ -196,4 +203,4 @@ This bot is for educational purposes. Respect WhatsApp's Terms of Service. Use r
 
 **Made with ❤️ by SIMON-TECH-BOT**
 
-Need help? [Create an issue](https://github.com/veriferjp-coder/SIMON-TECH-BOT/issues)
+Need help? [Create an issue](https://github.com/veriferjp-coder/SIMON-TECH-BOT/issues) or [Join WhatsApp Group](https://chat.whatsapp.com/KTlgMttDWxC04ZoiJCnz23)
