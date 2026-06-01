@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>SIMON TECH BOT v5.0 • COMMAND PANEL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 30%, #0a0c12, #030507);
+      font-family: 'Inter', sans-serif;
+      color: #eef5ff;
+      padding: 2rem 1.5rem;
+    }
+
+    /* BOT STYLE GLASS PANEL */
+    .bot-container {
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    /* header section with neon glow */
+    .bot-header {
+      background: rgba(10, 20, 30, 0.55);
+      backdrop-filter: blur(12px);
+      border-radius: 2.5rem;
+      padding: 1.6rem 2rem;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(0, 255, 255, 0.25);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 12px rgba(0, 230, 250, 0.3);
+      transition: all 0.2s;
+    }
+
+    .title-glow {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFFFFF, #2dd4bf, #22d3ee);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-root {
+      background: #0b1e2a;
+      border-radius: 40px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-left: 3px solid #0ff;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .status-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #0f212e;
+      padding: 6px 14px;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .search-area {
+      margin: 1.2rem 0 0.5rem 0;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #searchInput {
+      flex: 1;
+      background: #0a1118;
+      border: 1px solid #2a3a48;
+      padding: 0.9rem 1.2rem;
+      border-radius: 2rem;
+      color: white;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      outline: none;
+      transition: 0.2s;
+      min-width: 250px;
+    }
+
+    #searchInput:focus {
+      border-color: #2dd4bf;
+      box-shadow: 0 0 8px #2dd4bf66;
+    }
+
+    .stats-badge {
+      background: #0b141c;
+      border-radius: 2rem;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .filter-buttons {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .filter-btn {
+      background: rgba(45, 212, 191, 0.1);
+      border: 1px solid #2dd4bf;
+      color: #2dd4bf;
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: rgba(45, 212, 191, 0.25);
+      box-shadow: 0 0 10px rgba(45, 212, 191, 0.3);
+    }
+
+    /* category grid */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+      gap: 1.6rem;
+    }
+
+    /* cards */
+    .command-card {
+      background: rgba(8, 18, 26, 0.75);
+      backdrop-filter: blur(8px);
+      border-radius: 1.8rem;
+      border: 1px solid rgba(45, 212, 191, 0.3);
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .command-card:hover {
+      transform: translateY(-3px);
+      border-color: #2dd4bfaa;
+      box-shadow: 0 18px 30px -8px rgba(0,0,0,0.5), 0 0 8px #2dd4bf55;
+    }
+
+    .card-header {
+      padding: 1rem 1.5rem;
+      background: rgba(0, 30, 40, 0.6);
+      border-bottom: 1px solid #1e3a47;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .category-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.2px;
+      background: linear-gradient(120deg, #caf0f8, #80e0ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cmd-count {
+      font-family: monospace;
+      background: #0a1922;
+      padding: 2px 12px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #8dd0ff;
+    }
+
+    .command-list {
+      padding: 1rem 1.2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 0.5rem 0.8rem;
+      max-height: 500px;
+      overflow-y: auto;
+      transition: 0.2s;
+    }
+
+    .command-item {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      background: rgba(0, 255, 255, 0.05);
+      padding: 0.5rem 0.8rem;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: 0.1s;
+      border-left: 2px solid #2dd4bf66;
+      cursor: pointer;
+    }
+
+    .command-item:hover {
+      background: #1c3f4e33;
+      border-left-color: #0ff;
+      transform: translateX(2px);
+    }
+
+    .command-text {
+      flex: 1;
+      color: #c9f0ff;
+      word-break: break-word;
+      font-weight: 500;
+    }
+
+    .copy-icon {
+      opacity: 0.6;
+      font-size: 0.7rem;
+      transition: 0.1s;
+      color: #8dd0ff;
+    }
+
+    .command-item:hover .copy-icon {
+      opacity: 1;
+      color: #2dd4bf;
+    }
+
+    /* footer dev info */
+    .dev-footer {
+      margin-top: 2.5rem;
+      background: linear-gradient(135deg, #061016, #01060a);
+      border-radius: 2rem;
+      border: 1px solid #1f5e6e;
+      padding: 1.5rem 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .dev-info {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.8rem;
+      row-gap: 0.8rem;
+    }
+
+    .dev-info span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dev-info i {
+      width: 20px;
+      color: #2dd4bf;
+    }
+
+    .copy-toast {
+      position: fixed;
+      bottom: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1f2e3a;
+      backdrop-filter: blur(20px);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      color: #bbf0ff;
+      border: 1px solid #2dd4bf;
+      z-index: 999;
+      transition: 0.2s;
+      pointer-events: none;
+      font-family: monospace;
+      box-shadow: 0 0 20px rgba(45, 212, 191, 0.3);
+    }
+
+    .hidden-category .command-list {
+      display: none;
+    }
+
+    .collapse-icon {
+      transition: transform 0.2s;
+      font-size: 1rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .stat-card {
+      background: rgba(45, 212, 191, 0.08);
+      border: 1px solid rgba(45, 212, 191, 0.2);
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2dd4bf;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: #888;
+      margin-top: 0.3rem;
+      text-transform: uppercase;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0b1c24;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #2dd4bf;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4dd4bf;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 1rem;
+      }
+      .categories-grid {
+        grid-template-columns: 1fr;
+      }
+      .command-list {
+        grid-template-columns: 1fr 1fr;
+      }
+      .title-glow {
+        font-size: 1.4rem;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="bot-container">
+  <div class="bot-header">
+    <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 15px; align-items: center;">
+      <div class="title-glow">
+        <i class="fas fa-robot"></i> SIMON TECH BOT v5.0
+        <span class="badge-root">⚡ ROOT ACCESS</span>
+      </div>
+      <div class="status-live">
+        <i class="fas fa-circle" style="color:#2dd4bf; font-size: 0.6rem;"></i> SYSTEM ONLINE • GOD MODE
+      </div>
+    </div>
+    <div class="search-area">
+      <input type="text" id="searchInput" placeholder="🔍  Search commands (.ban .sticker .ai .tagall .music ...)" autocomplete="off">
+      <div class="stats-badge"><i class="fas fa-terminal"></i> <span id="totalCommandsCount">0</span> commands</div>
+    </div>
+    <div class="filter-buttons" id="filterButtons"></div>
+    <div style="margin-top: 12px; font-size:0.75rem; opacity:0.7; font-family: monospace;">⚡ ENTERPRISE EDITION • FULL SECURITY • 2027 AI ENGINE</div>
+    
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" id="categoryCount">0</div>
+        <div class="stat-label">Categories</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="visibleCommandCount">0</div>
+        <div class="stat-label">Visible</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="ownerCmdCount">0</div>
+        <div class="stat-label">Owner Cmds</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="aiCmdCount">0</div>
+        <div class="stat-label">AI Commands</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="categories-grid" id="categoriesContainer"></div>
+
+  <div class="dev-footer">
+    <div class="dev-info">
+      <span><i class="fas fa-crown"></i> SIMON TECH</span>
+      <span><i class="fab fa-whatsapp"></i> +2349166265317</span>
+      <span><i class="fas fa-globe"></i> Nigeria</span>
+      <span><i class="fas fa-code-branch"></i> Baileys MD + Node.js</span>
+      <span><i class="fas fa-shield-alt"></i> RAM-X ULTRA</span>
+      <span><i class="fas fa-database"></i> 600+ CMDS</span>
+    </div>
+    <div style="font-family:monospace; font-size:0.7rem;">🚀 POWERED BY SIMON TECH 2027 • UPGRADED v5.0</div>
+  </div>
+</div>
+<div id="toastMsg" class="copy-toast" style="opacity:0; visibility:hidden;">📋 Copied to clipboard!</div>
+
+<script>
+  // ============================================================
+  // UPGRADED COMMAND DATABASE v5.0 WITH 600+ COMMANDS
+  // ============================================================
+  const COMMANDS_CATEGORIES = {
+    "👑 OWNER COMMANDS": [
+      ".ban", ".unban", ".tempban", ".permaban", ".softban", ".hardban", ".shadowban", ".block", ".unblock",
+      ".broadcast", ".broadcastgc", ".broadcastall", ".join", ".leave", ".restart", ".shutdown", ".reboot",
+      ".updatebot", ".maintenance", ".public", ".private", ".self", ".setprefix", ".setppbot", ".setnamebot",
+      ".setstatus", ".setbio", ".setwelcome", ".setgoodbye", ".setcmd", ".delcmd", ".listcmd", ".addowner",
+      ".delowner", ".listowner", ".addsudo", ".delsudo", ".listsudo", ".addpremium", ".delpremium", ".listpremium",
+      ".premiumlist", ".clearchat", ".clearsession", ".backup", ".restore", ".resetdb", ".cleardb", ".database",
+      ".dbstats", ".session", ".getsession", ".deletesession", ".pair", ".paircode", ".unpair", ".autoread",
+      ".autoreact", ".autotyping", ".autorecording", ".autobio", ".autostatusview", ".autostatusreact", ".autoreply",
+      ".anticall", ".antibug", ".antidelete", ".antilink", ".antispam", ".antifake", ".antibot", ".antitag",
+      ".antiflood", ".antiraid", ".antimention", ".antinsfw", ".antitoxic", ".antibadword", ".security", ".lockdown",
+      ".unlockdown", ".emergency", ".safe", ".blacklist", ".unblacklist", ".whitelist", ".unwhitelist", ".addplugin",
+      ".delplugin", ".reloadplugin", ".plugins", ".plugininfo", ".installplugin", ".uninstallplugin", ".cmdinfo",
+      ".commandstats", ".activity", ".logs", ".errorlogs", ".performance", ".monitor", ".ram", ".cpu", ".disk",
+      ".network", ".uptime", ".runtime", ".ping", ".speed", ".status", ".stats", ".userinfo", ".groupinfo",
+      ".systeminfo", ".serverinfo", ".botinfo", ".eval", ".exec", ".shell", ".terminal", ".getfile", ".delfile",
+      ".upload", ".download", ".gitpull", ".gitpush", ".update", ".rollback", ".maintenanceon", ".maintenanceoff",
+      ".announcement", ".notifyall", ".massmessage", ".reportlist", ".clearreports", ".verifyuser", ".unverifyuser",
+      ".warnuser", ".resetwarn", ".kickallfake", ".kickallinactive", ".kickallspam", ".banallraiders", ".banallbots",
+      ".ownerpanel", ".developer", ".devmode", ".debug", ".fix", ".optimize", ".boost", ".repair", ".crashrecovery",
+      ".fullbackup", ".restorebackup", ".factoryreset", ".setnameowner", ".setppowner", ".getownerinfo"
+    ],
+    "👥 GROUP COMMANDS": [
+      ".link", ".grouplink", ".revoke", ".resetlink", ".groupinfo", ".groupstatus", ".group open", ".group close",
+      ".opengroup", ".closegroup", ".setname", ".setdesc", ".setppgroup", ".tagall", ".hidetag", ".everyone",
+      ".admins", ".listadmins", ".listonline", ".members", ".kick", ".kick2", ".kickall", ".add", ".promote",
+      ".demote", ".mute", ".unmute", ".warn", ".unwarn", ".warnings", ".resetwarn", ".ban", ".unban", ".tempban",
+      ".permaban", ".softban", ".shadowban", ".lock", ".unlock", ".lockgroup", ".unlockgroup", ".welcome on",
+      ".welcome off", ".goodbye on", ".goodbye off", ".setwelcome", ".setgoodbye", ".welcomecard", ".goodbyecard",
+      ".antiraid", ".antilink", ".antispam", ".antifake", ".antibot", ".antitag", ".antimention", ".antidelete",
+      ".antiflood", ".antinsfw", ".antibadword", ".antitoxic", ".antisticker", ".antiemoji", ".antivideo",
+      ".antiaudio", ".antidocument", ".antiforward", ".antiadvert", ".antiscam", ".verify", ".unverify", ".captcha",
+      ".autorole", ".autokick", ".automute", ".autowarn", ".autoban", ".autopromote", ".autodemote", ".slowmode",
+      ".fastmode", ".nightmode", ".daymode", ".closetime", ".opentime", ".scheduleopen", ".scheduleclose", ".afk",
+      ".poll", ".vote", ".suggestion", ".announcement", ".rules", ".setrules", ".addrule", ".delrule", ".report",
+      ".reports", ".clearreports", ".pin", ".unpin", ".star", ".unstar", ".inactive", ".kickinactive", ".ghost",
+      ".kickghost", ".fakecheck", ".kickfake", ".clean", ".purge", ".purgewarnings", ".purgebots", ".purgespam",
+      ".purgefakes", ".invites", ".invitestats", ".rank", ".leaderboard", ".xp", ".level", ".reputation",
+      ".topchatters", ".activity", ".groupstats", ".messagecount", ".membercount", ".dailyactivity", ".weeklyactivity",
+      ".monthlyactivity", ".groupbackup", ".grouprestore", ".exportgroup", ".importgroup", ".clonegroup",
+      ".transferownership", ".groupsettings", ".groupdashboard", ".auditlog", ".securitylog", ".eventlog", ".modlog",
+      ".modpanel", ".adminpanel", ".gcpanel", ".gcconfig", ".gcstatus", ".gclockdown", ".gcunlock", ".emergencymode",
+      ".safemode", ".raidmode", ".normalmode", ".groupannounce", ".groupmute", ".groupunmute", ".autogreet"
+    ],
+    "🧩 UTILITY COMMANDS": [
+      ".calc", ".calculator", ".math", ".convert", ".currency", ".exchange", ".unit", ".timezone", ".time", ".date",
+      ".calendar", ".countdown", ".stopwatch", ".timer", ".alarm", ".reminder", ".schedule", ".todo", ".notes",
+      ".notepad", ".memo", ".checklist", ".password", ".genpass", ".securepass", ".hash", ".encrypt", ".decrypt",
+      ".encode", ".decode", ".base64", ".md5", ".sha1", ".sha256", ".uuid", ".token", ".otp", ".random",
+      ".randomnumber", ".coinflip", ".dice", ".flip", ".pick", ".choose", ".qr", ".readqr", ".barcode", ".readbarcode",
+      ".shortlink", ".expandlink", ".tinyurl", ".urlcheck", ".urlinfo", ".whois", ".dns", ".pinghost", ".portscan",
+      ".iplookup", ".myip", ".hostinfo", ".domaininfo", ".websiteinfo", ".speedtest", ".latency", ".network", ".signal",
+      ".weather", ".forecast", ".temperature", ".airquality", ".moonphase", ".sunrise", ".sunset", ".compass", ".gps",
+      ".location", ".distance", ".map", ".translate", ".dictionary", ".define", ".synonym", ".antonym", ".spellcheck",
+      ".grammar", ".textcase", ".uppercase", ".lowercase", ".reverse", ".fancytext", ".emojify", ".tts", ".stt",
+      ".speech", ".voice", ".read", ".scan", ".ocr", ".extracttext", ".pdfinfo", ".pdf2text", ".docinfo", ".zip",
+      ".unzip", ".compress", ".extract", ".upload", ".download", ".uploadfile", ".cloud", ".storage", ".backup",
+      ".restore", ".save", ".load", ".afk", ".profile", ".userinfo", ".deviceinfo", ".systeminfo", ".cpu", ".ram",
+      ".memory", ".disk", ".battery", ".uptime", ".runtime", ".status", ".stats", ".monitor", ".diagnostics",
+      ".healthcheck", ".performance", ".benchmark", ".clean", ".optimize", ".boost", ".cache", ".clearcache", ".refresh",
+      ".repair", ".report", ".feedback", ".support", ".help", ".menu", ".commands", ".features", ".about", ".version",
+      ".changelog", ".news", ".updates", ".checkupdate", ".serverstatus", ".botstatus", ".maintenance", ".logs"
+    ],
+    "😂 FUN COMMANDS": [
+      ".joke", ".darkjoke", ".meme", ".funfact", ".fact", ".quote", ".motivate", ".advice", ".wisdom", ".truth",
+      ".dare", ".neverhaveiever", ".wouldyourather", ".thisorthat", ".roast", ".compliment", ".pickup", ".flirt",
+      ".ship", ".love", ".crush", ".marry", ".divorce", ".date", ".compatibility", ".relationship", ".friendship",
+      ".match", ".8ball", ".future", ".predict", ".fortune", ".luck", ".lucky", ".rate", ".hotrate", ".beautyrate",
+      ".coolrate", ".smartrate", ".richrate", ".cuterate", ".simp", ".simpcheck", ".gayrate", ".lesbianrate",
+      ".hornyrate", ".toxicrate", ".kindrate", ".respectrate", ".brainlevel", ".iq", ".eq", ".crazyrate", ".stupidrate",
+      ".evilcheck", ".angelcheck", ".hero", ".villain", ".sus", ".detective", ".hacker", ".mafia", ".pirate", ".king",
+      ".queen", ".president", ".millionaire", ".billionaire", ".celebrity", ".wizard", ".ninja", ".samurai", ".warrior",
+      ".randomuser", ".randomcouple", ".randomfact", ".randomemoji", ".randomnumber", ".randomname", ".coinflip",
+      ".flipcoin", ".dice", ".roll", ".lottery", ".jackpot", ".spin", ".wheel", ".slot", ".casino", ".blackjack",
+      ".roulette", ".rps", ".rock", ".paper", ".scissors", ".guess", ".numberguess", ".emojiquiz", ".wordguess",
+      ".scramble", ".riddle", ".quiz", ".trivia", ".hangman", ".tictactoe", ".wordgame", ".memorygame", ".reactiongame",
+      ".fasttype", ".mathquiz", ".countryquiz", ".flagquiz", ".musicquiz", ".moviequiz", ".animequiz", ".footballquiz",
+      ".challenge", ".battle", ".duel", ".fight", ".punch", ".slap", ".kick", ".hug", ".kiss", ".cuddle", ".pat",
+      ".poke", ".tickle", ".bite", ".wave", ".dance", ".laugh", ".cry", ".angry", ".happy", ".sad", ".confused", ".shy"
+    ],
+    "🧑‍💻 DEVELOPER COMMANDS": [
+      ".dev", ".developer", ".devinfo", ".devpanel", ".root", ".rootaccess", ".console", ".terminal", ".shell", ".exec",
+      ".eval", ".runjs", ".runnode", ".bash", ".cmd", ".debug", ".trace", ".inspect", ".test", ".sandbox", ".logs",
+      ".errorlogs", ".debuglogs", ".activitylogs", ".auditlogs", ".systemlogs", ".monitor", ".performance", ".cpu",
+      ".ram", ".memory", ".disk", ".network", ".uptime", ".runtime", ".speed", ".latency", ".healthcheck",
+      ".diagnostics", ".optimize", ".boost", ".repair", ".cleanup", ".cache", ".clearcache", ".restart", ".reboot",
+      ".shutdown", ".reload", ".reloadall", ".refresh", ".update", ".rollback", ".gitpull", ".gitpush", ".gitstatus",
+      ".gitclone", ".deploy", ".redeploy", ".build", ".compile", ".install", ".uninstall", ".modules", ".npm",
+      ".dependencies", ".plugin", ".plugins", ".addplugin", ".delplugin", ".reloadplugin", ".plugininfo", ".pluginstats",
+      ".database", ".dbinfo", ".dbstats", ".backupdb", ".restoredb", ".resetdb", ".exportdb", ".importdb", ".session",
+      ".sessions", ".paircode", ".pairstatus", ".createsession", ".deletesession", ".clearsession", ".security",
+      ".firewall", ".antibug", ".anticrash", ".antiattack", ".antiddos", ".lockdown", ".unlockdown", ".safemode",
+      ".emergency", ".apikey", ".apikeys", ".createkey", ".resetkey", ".deletekey", ".premium", ".premiumlist",
+      ".addpremium", ".delpremium", ".expirepremium", ".users", ".userstats", ".banuser", ".unbanuser", ".blacklist",
+      ".unblacklist", ".whitelist", ".unwhitelist", ".broadcast", ".broadcastall", ".broadcastgc", ".announcement"
+    ],
+    "🎨 MEDIA COMMANDS": [
+      ".sticker", ".s", ".take", ".wm", ".steal", ".crop", ".resize", ".rotate", ".flip", ".mirror", ".blur", ".sharpen",
+      ".enhance", ".hd", ".remini", ".colorize", ".restore", ".removebg", ".background", ".transparent", ".pixelate",
+      ".invert", ".greyscale", ".sepia", ".brightness", ".contrast", ".saturation", ".hue", ".filter", ".effects",
+      ".wanted", ".jail", ".gun", ".nokia", ".rip", ".beautiful", ".trash", ".delete", ".trigger", ".wasted", ".gay",
+      ".comrade", ".circle", ".rounded", ".avatar", ".profilepic", ".toimg", ".tourl", ".uploadimg", ".imginfo",
+      ".imgscan", ".ocr", ".readtext", ".caption", ".meme", ".smeme", ".quoteimg", ".logo", ".textlogo", ".neonlogo",
+      ".glitchlogo", ".goldlogo", ".firelogo", ".3dlogo", ".gfx", ".gfx2", ".gfx3", ".gfx4", ".createlogo", ".banner",
+      ".poster", ".cover", ".wallpaper", ".thumbnail", ".youtubebanner", ".channelart", ".tomp3", ".tovn", ".toptt",
+      ".togif", ".tomp4", ".toaudio", ".voice", ".tts", ".stt", ".bass", ".deep", ".robot", ".nightcore", ".slow",
+      ".fast", ".reverse", ".smooth", ".blown", ".earrape", ".8d", ".surround", ".echo", ".karaoke", ".audiocut",
+      ".audiomerge", ".audioinfo", ".video", ".videoinfo", ".compress", ".trim", ".mergevideo", ".slowmo", ".speedup",
+      ".reversevideo", ".gif", ".gifmaker", ".gifsticker", ".videosticker", ".watermark", ".nowm", ".editvideo",
+      ".movieeffect", ".cinematic", ".animation", ".frame", ".collage", ".photogrid", ".slideshow", ".musicvideo"
+    ],
+    "🤖 AI COMMANDS": [
+      ".ai", ".gpt", ".gpt4", ".chat", ".ask", ".assistant", ".smartai", ".openai", ".metaai", ".claude", ".gemini",
+      ".deepseek", ".copilot", ".llama", ".mistral", ".aihelp", ".aimenu", ".aipanel", ".aistatus", ".aistats", ".aiinfo",
+      ".explain", ".explaincode", ".summarize", ".rewrite", ".paraphrase", ".expand", ".shorten", ".grammar",
+      ".spellcheck", ".proofread", ".translate", ".translateai", ".language", ".essay", ".article", ".story", ".poem",
+      ".lyrics", ".speech", ".debate", ".argument", ".review", ".blog", ".email", ".letter", ".caption", ".hashtag",
+      ".bio", ".slogan", ".quote", ".motivation", ".jokeai", ".factai", ".riddleai", ".quizai", ".mathai", ".solve",
+      ".equation", ".calculatorai", ".physics", ".chemistry", ".biology", ".history", ".geography", ".science",
+      ".research", ".study", ".tutor", ".homework", ".question", ".answer", ".examai", ".flashcards", ".code", ".bugfix",
+      ".fixcode", ".debug", ".reviewcode", ".optimizecode", ".html", ".css", ".javascript", ".nodejs", ".python",
+      ".java", ".php", ".sql", ".json", ".regex", ".api", ".botcode", ".website", ".app", ".script", ".terminalai",
+      ".image", ".imagine", ".generate", ".photoai", ".realistic", ".animeai", ".artai", ".logoai", ".posterai"
+    ],
+    "🌍 GENERAL COMMANDS": [
+      ".menu", ".help", ".ping", ".alive", ".runtime", ".uptime", ".speed", ".status", ".owner", ".developer",
+      ".version", ".about", ".info", ".support", ".donate", ".report", ".bug", ".feedback", ".update", ".changelog",
+      ".rules", ".privacy", ".terms", ".commands", ".features", ".news", ".profile", ".dashboard", ".settings",
+      ".language", ".prefix", ".invite", ".website", ".github", ".channel", ".group", ".contact", ".tips", ".tutorial"
+    ],
+    "👤 PROFILE COMMANDS": [
+      ".profile", ".myprofile", ".userinfo", ".whois", ".id", ".rank", ".level", ".xp", ".reputation", ".badge",
+      ".badges", ".title", ".bio", ".setbio", ".age", ".gender", ".birthday", ".country", ".city", ".status", ".mood",
+      ".nickname", ".setnick", ".setname", ".avatar", ".setavatar", ".banner", ".setbanner", ".theme", ".inventory",
+      ".wallet", ".bank", ".daily", ".weekly", ".monthly", ".premium", ".premiuminfo", ".achievements", ".trophies",
+      ".medals", ".statistics", ".activity", ".history", ".messages", ".commandsused", ".streak", ".followers",
+      ".following", ".friends", ".friendlist", ".marry", ".partner", ".relationship", ".divorce", ".pet", ".pets",
+      ".house", ".vehicle", ".collection", ".customize", ".background", ".frames", ".showcase", ".leaderboard"
+    ],
+    "🍥 ANIME COMMANDS": [
+      ".anime", ".animeinfo", ".animelist", ".animequote", ".animefact", ".animewallpaper", ".animepic", ".animegirl",
+      ".animeboy", ".waifu", ".husbando", ".neko", ".kitsune", ".megumin", ".rem", ".emilia", ".zerotwo", ".mikasa",
+      ".nezuko", ".shinobu", ".naruto", ".sasuke", ".itachi", ".kakashi", ".madara", ".boruto", ".luffy", ".zoro",
+      ".sanji", ".nami", ".ace", ".law", ".goku", ".vegeta", ".gohan", ".broly", ".frieza", ".tanjiro", ".zenitsu",
+      ".inosuke", ".rengoku", ".gojo", ".sukuna", ".yuji", ".toji", ".levi", ".eren", ".armin", ".killua", ".gon",
+      ".hisoka", ".kurapika", ".light", ".l", ".ryuk", ".animehug", ".animekiss", ".animepat", ".animepoke",
+      ".animecuddle", ".animeslap", ".animebite", ".animetickle", ".animewave", ".animedance", ".animehappy",
+      ".animesad", ".animecry", ".animeblush", ".animewink", ".animekill", ".animefight", ".animeedit", ".animefilter",
+      ".animeavatar", ".animesticker", ".animequiz", ".animeguess", ".animebattle", ".animetop", ".seasonalanime"
+    ],
+    "📥 DOWNLOADER COMMANDS": [
+      ".play", ".song", ".music", ".video", ".ytsearch", ".ytmp3", ".ytmp4", ".ytaudio", ".ytvideo", ".youtube",
+      ".shorts", ".playlist", ".spotify", ".spotifysearch", ".spotifydl", ".soundcloud", ".soundclouddl", ".audiomack",
+      ".boomplay", ".applemusic", ".deezer", ".bandcamp", ".tiktok", ".tt", ".ttmp3", ".ttmp4", ".ttslide", ".instagram",
+      ".ig", ".igdl", ".igreel", ".igstory", ".igphoto", ".facebook", ".fb", ".fbdl", ".fbvideo", ".twitter", ".xdl",
+      ".tweetvideo", ".threads", ".threadsdl", ".telegram", ".tgdl", ".pinterest", ".pin", ".pinimage", ".pinvideo",
+      ".snapchat", ".snapdl", ".linkedin", ".linkedindl", ".reddit", ".redditdl", ".mediafire", ".mf", ".apk",
+      ".apksearch", ".apkdl", ".modapk", ".gdrive", ".drive", ".mega", ".megadl", ".dropbox", ".onedrive", ".github",
+      ".gitclone", ".repo", ".npm", ".package", ".wallpaper", ".image", ".photo", ".pics", ".gallery", ".animewallpaper",
+      ".ringtone", ".ringtonedl", ".ebook", ".pdf", ".book", ".novel", ".manga", ".movie", ".series", ".subtitle"
+    ],
+    "🎤 MISC COMMANDS": [
+      ".ping", ".alive", ".menu", ".help", ".owner", ".developer", ".about", ".info", ".version", ".runtime", ".uptime",
+      ".speed", ".status", ".botinfo", ".systeminfo", ".dashboard", ".profile", ".rank", ".level", ".xp", ".leaderboard",
+      ".daily", ".weekly", ".monthly", ".reward", ".claim", ".premium", ".premiuminfo", ".invite", ".support", ".contact",
+      ".channel", ".group", ".website", ".github", ".script", ".repo", ".rules", ".privacy", ".terms", ".feedback",
+      ".report", ".bug", ".request", ".suggest", ".vote", ".poll", ".news", ".updates", ".changelog", ".features",
+      ".commands", ".language", ".setlang", ".theme", ".settings", ".prefix", ".setprefix", ".timezone", ".time",
+      ".date", ".calendar", ".random", ".fact", ".quote", ".tip", ".motivation", ".truth", ".dare", ".8ball", ".fortune"
+    ],
+    "😀 REACTION COMMANDS": [
+      ".hug", ".kiss", ".cuddle", ".pat", ".poke", ".tickle", ".bite", ".lick", ".handhold", ".wave", ".highfive",
+      ".handshake", ".salute", ".cheer", ".clap", ".dance", ".party", ".laugh", ".giggle", ".smile", ".wink", ".blush",
+      ".happy", ".excited", ".love", ".heart", ".crush", ".admire", ".flirt", ".angry", ".mad", ".annoy", ".rage",
+      ".sad", ".cry", ".weep", ".depressed", ".confused", ".thinking", ".facepalm", ".shrug", ".sleep", ".yawn", ".bored",
+      ".scared", ".fear", ".shocked", ".surprised", ".nervous", ".embarrassed", ".punch", ".slap", ".kick", ".fight",
+      ".attack", ".shoot", ".bonk", ".kill", ".stab", ".yeet", ".bully", ".tease", ".mock", ".roast", ".comfort",
+      ".protect", ".support", ".forgive", ".apologize", ".welcome", ".goodbye", ".greet", ".congratulate", ".celebrate"
+    ],
+    "🔍 SEARCH COMMANDS": [
+      ".search", ".google", ".googlesearch", ".wiki", ".wikipedia", ".youtube", ".ytsearch", ".yts", ".lyrics",
+      ".songlyrics", ".news", ".headlines", ".weather", ".forecast", ".translate", ".dictionary", ".define", ".synonym",
+      ".antonym", ".spellcheck", ".github", ".gitsearch", ".repo", ".npm", ".npminfo", ".package", ".appstore",
+      ".playstore", ".apksearch", ".apkinfo", ".movie", ".imdb", ".series", ".anime", ".animeinfo", ".manga",
+      ".character", ".waifu", ".quote", ".fact", ".book", ".author", ".recipe", ".food", ".restaurant", ".location",
+      ".map", ".nearby", ".country", ".city", ".timezone", ".currency", ".exchange", ".crypto", ".bitcoin", ".stock",
+      ".market", ".company", ".business", ".startup", ".job", ".career", ".scholar", ".research", ".science"
+    ],
+    "💰 ECONOMY COMMANDS": [
+      ".balance", ".bal", ".wallet", ".bank", ".deposit", ".withdraw", ".transfer", ".pay", ".sendmoney", ".daily",
+      ".weekly", ".monthly", ".hourly", ".bonus", ".reward", ".claim", ".salary", ".work", ".job", ".career", ".beg",
+      ".searchcash", ".crime", ".heist", ".rob", ".steal", ".gamble", ".bet", ".casino", ".slot", ".blackjack",
+      ".roulette", ".coinflip", ".lottery", ".jackpot", ".invest", ".stocks", ".crypto", ".trade", ".mine", ".farming",
+      ".fish", ".hunt", ".collect", ".craft", ".shop", ".buy", ".sell", ".market", ".auction", ".inventory", ".items",
+      ".use", ".gift", ".tradeitem", ".petshop", ".pet", ".feedpet", ".trainpet", ".house", ".upgradehouse", ".vehicle",
+      ".garage", ".backpack", ".storage", ".vault", ".leaderboard", ".richlist", ".topmoney", ".economystats", ".rank"
+    ],
+    "🚫 BAN MANAGEMENT COMMANDS": [
+      ".ban", ".unban", ".tempban", ".permaban", ".permanentban", ".softban", ".hardban", ".globalban", ".groupban",
+      ".userban", ".banlist", ".banned", ".checkban", ".baninfo", ".banhistory", ".banreason", ".autoban", ".massban",
+      ".forceban", ".silentban", ".shadowban", ".weekban", ".monthban", ".yearban", ".dayban", ".hourban", ".warn",
+      ".warnings", ".resetwarn", ".strike", ".strikes", ".resetstrikes", ".blacklist", ".unblacklist", ".blacklistadd",
+      ".blacklistremove", ".whitelist", ".unwhitelist", ".appealban", ".banappeals", ".approveappeal", ".rejectappeal",
+      ".kickban", ".raidban", ".spamban", ".linkban", ".botban", ".fakeban", ".nsfwban", ".scamban", ".banpanel"
+    ]
+  };
+
+  // ============================================================
+  // INITIALIZATION & STATS
+  // ============================================================
+  let totalCmds = 0;
+  for (let cat in COMMANDS_CATEGORIES) totalCmds += COMMANDS_CATEGORIES[cat].length;
+  document.getElementById('totalCommandsCount').innerText = totalCmds;
+  document.getElementById('categoryCount').innerText = Object.keys(COMMANDS_CATEGORIES).length;
+  document.getElementById('ownerCmdCount').innerText = COMMANDS_CATEGORIES["👑 OWNER COMMANDS"].length;
+  document.getElementById('aiCmdCount').innerText = COMMANDS_CATEGORIES["🤖 AI COMMANDS"].length;
+  document.getElementById('visibleCommandCount').innerText = totalCmds;
+
+  // ============================================================
+  // RENDER FUNCTIONS
+  // ============================================================
+  const container = document.getElementById('categoriesContainer');
+  
+  function renderCategories(filterText = '', selectedFilter = 'all') {
+    container.innerHTML = '';
+    const lowerFilter = filterText.toLowerCase();
+    let visibleCount = 0;
+
+    for (const [category, cmdList] of Object.entries(COMMANDS_CATEGORIES)) {
+      let filteredCmds = cmdList;
+      
+      // Apply category filter
+      if (selectedFilter !== 'all' && !category.includes(selectedFilter)) continue;
+      
+      // Apply search filter
+      if (lowerFilter) {
+        filteredCmds = cmdList.filter(cmd => cmd.toLowerCase().includes(lowerFilter));
+      }
+      
+      if (filteredCmds.length === 0 && lowerFilter !== '') continue;
+      
+      visibleCount += filteredCmds.length;
+      
+      const card = document.createElement('div');
+      card.className = 'command-card';
+      
+      const header = document.createElement('div');
+      header.className = 'card-header';
+      header.setAttribute('data-category', category);
+      header.innerHTML = `
+        <div class="category-title">
+          <i class="fas fa-caret-down collapse-icon"></i> ${escapeHtml(category)}
+        </div>
+        <span class="cmd-count">${filteredCmds.length}</span>
+      `;
+      
+      const cmdListDiv = document.createElement('div');
+      cmdListDiv.className = 'command-list';
+      
+      filteredCmds.forEach(cmd => {
+        const cmdItem = document.createElement('div');
+        cmdItem.className = 'command-item';
+        cmdItem.innerHTML = `
+          <span class="command-text">${escapeHtml(cmd)}</span>
+          <i class="fas fa-copy copy-icon"></i>
+        `;
+        cmdItem.addEventListener('click', (e) => {
+          e.stopPropagation();
+          copyToClipboard(cmd);
+        });
+        cmdListDiv.appendChild(cmdItem);
+      });
+      
+      card.appendChild(header);
+      card.appendChild(cmdListDiv);
+      
+      // Collapse/expand logic
+      let collapsed = false;
+      header.addEventListener('click', () => {
+        collapsed = !collapsed;
+        if (collapsed) {
+          cmdListDiv.style.display = 'none';
+          header.querySelector('.collapse-icon').style.transform = 'rotate(-90deg)';
+        } else {
+          cmdListDiv.style.display = 'grid';
+          header.querySelector('.collapse-icon').style.transform = 'rotate(0deg)';
+        }
+      });
+      
+      container.appendChild(card);
+    }
+    
+    document.getElementById('visibleCommandCount').innerText = visibleCount;
+    
+    if (container.children.length === 0 && lowerFilter) {
+      const noRes = document.createElement('div');
+      noRes.className = 'command-card';
+      noRes.style.padding = '2rem';
+      noRes.style.textAlign = 'center';
+      noRes.innerHTML = '<i class="fas fa-search"></i> ⚡ No commands match your search.';
+      container.appendChild(noRes);
+    }
+  }
+
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      const toast = document.getElementById('toastMsg');
+      toast.style.opacity = '1';
+      toast.style.visibility = 'visible';
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.visibility = 'hidden';
+      }, 1500);
+    });
+  }
+
+  // ============================================================
+  // SEARCH & FILTER
+  // ============================================================
+  const searchBox = document.getElementById('searchInput');
+  let debounceTimer;
+  let currentFilter = 'all';
+
+  // Create filter buttons
+  const filterContainer = document.getElementById('filterButtons');
+  const categories = Object.keys(COMMANDS_CATEGORIES);
+  
+  const allBtn = document.createElement('button');
+  allBtn.className = 'filter-btn active';
+  allBtn.textContent = '✓ All';
+  allBtn.addEventListener('click', () => {
+    currentFilter = 'all';
+    updateFilterButtons();
+    renderCategories(searchBox.value, 'all');
+  });
+  filterContainer.appendChild(allBtn);
+
+  categories.slice(0, 5).forEach(cat => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.textContent = cat.split(' ')[0];
+    btn.addEventListener('click', () => {
+      currentFilter = cat.split(' ')[0];
+      updateFilterButtons();
+      renderCategories(searchBox.value, cat.split(' ')[0]);
+    });
+    filterContainer.appendChild(btn);
+  });
+
+  function updateFilterButtons() {
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.textContent.includes('✓')) btn.classList.add('active');
+    });
+  }
+
+  searchBox.addEventListener('input', (e) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => {
+      renderCategories(e.target.value, currentFilter);
+    }, 200);
+  });
+
+  renderCategories('', 'all');
+</script>
+</body>
+</html>
