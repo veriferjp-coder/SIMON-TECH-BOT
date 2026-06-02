@@ -2,7 +2,7 @@
 
 ![SIMON-TECH Bot](assets/bot-appearance.png)
 
-SIMON-v2 is a powerful WhatsApp bot built with Baileys. It supports commands like ping, menu, auto replies, and more. Easily deploy using GitHub and run on platforms like Replit. Simple setup, fast performance, and customizable features for automation and fun.
+SIMON-v2 is a powerful WhatsApp bot built with Baileys. It supports commands like ping, menu, auto replies, and more. Easily deploy using GitHub and run on platforms like Replit. Simple setup, fast[...]
 
 ## 📋 Features
 
@@ -21,6 +21,7 @@ SIMON-v2 is a powerful WhatsApp bot built with Baileys. It supports commands lik
 Connect with us and get support:
 
 - **📱 WhatsApp Group:** [Join Group](https://chat.whatsapp.com/KTlgMttDWxC04ZoiJCnz23)
+- **📢 WhatsApp Channel:** [Join Channel](https://whatsapp.com/channel/0029VbDGZnkJf05bl3rDHR2y)
 
 ## 🚀 Getting Started
 
